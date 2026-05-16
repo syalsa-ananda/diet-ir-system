@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ResepDiet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:    #22a861;
+  --green-d:  #178a4e;
+  --green-l:  #e8f8ef;
+  --green-m:  #b2e8cb;
+  --gray-50:  #f7f8fa;
+  --gray-100: #f0f2f5;
+  --gray-200: #e4e7ec;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --white:    #ffffff;
+  --font:     'Plus Jakarta Sans', system-ui, sans-serif;
+  --serif:    'DM Serif Display', Georgia, serif;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --r-full: 9999px;
+  --shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+html, body {
+  height: 100%; font-family: var(--font);
+  background: var(--gray-100);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: 52px; background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; padding: 0 16px; gap: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--green), var(--green-d));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(34,168,97,.3);
+}
+.logo-mark svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.logo-name { font-size: 15px; font-weight: 700; color: var(--gray-900); letter-spacing: -.3px; }
+.logo-name em { color: var(--green); font-style: normal; }
+.corpus-badge {
+  margin-left: auto; font-size: 11px; color: var(--gray-400);
+  background: var(--gray-100); padding: 3px 10px; border-radius: var(--r-full);
+  border: 1px solid var(--gray-200);
+}
+.corpus-badge b { color: var(--green); font-weight: 600; }
+
+/* ── CHAT LAYOUT ── */
+.chat-wrap {
+  display: flex; flex-direction: column;
+  height: 100vh; padding-top: 52px;
+}
+
+.messages {
+  flex: 1; overflow-y: auto;
+  padding: 16px 12px; scroll-behavior: smooth;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.messages::-webkit-scrollbar { width: 3px; }
+.messages::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
+
+/* ── BUBBLES ── */
+.msg { display: flex; gap: 8px; animation: up .18s ease both; }
+.msg.user { flex-direction: row-reverse; }
+@keyframes up { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+.av {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; margin-top: 2px;
+}
+.msg.bot  .av { background: var(--green-l); color: var(--green-d); }
+.msg.user .av { background: var(--gray-900); color: #fff; }
+
+.bub {
+  max-width: 86%; padding: 10px 13px;
+  font-size: 13.5px; line-height: 1.65; border-radius: var(--r-lg);
+}
+.msg.bot .bub {
+  background: var(--white); border: 1px solid var(--gray-200);
+  color: var(--gray-700); border-bottom-left-radius: var(--r-sm);
+  box-shadow: var(--shadow);
+}
+.msg.user .bub {
+  background: var(--gray-900); color: #fff;
+  border-bottom-right-radius: var(--r-sm);
+}
+.bub b  { font-weight: 600; color: var(--gray-900); }
+.msg.user .bub b { color: #fff; }
+.bub em { color: var(--green); font-style: normal; font-weight: 600; }
+
+/* ── RECIPE CARD inside bubble ── */
+.recipe-bubble {
+  max-width: 92%; animation: up .2s ease both;
+}
+.recipe-card {
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: var(--shadow); margin-bottom: 12px;
+}
+.recipe-card:last-child { margin-bottom: 0; }
+
+.rc-head {
+  padding: 13px 15px 10px;
+  display: flex; align-items: flex-start; gap: 9px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.rc-rank {
+  width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--green), var(--green-d));
+  color: #fff; font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 4px rgba(34,168,97,.3); margin-top: 1px;
+}
+.rc-title {
+  flex: 1; font-family: var(--serif);
+  font-size: 14.5px; color: var(--gray-900); line-height: 1.35;
+}
+.rc-cat {
+  flex-shrink: 0; font-size: 10px; font-weight: 600;
+  color: var(--green-d); background: var(--green-l);
+  border: 1px solid var(--green-m);
+  padding: 2px 8px; border-radius: var(--r-full); margin-top: 1px;
+  text-transform: capitalize;
+}
+
+/* Nutrition row */
+.rc-nut {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--gray-200);
+}
+.rc-nut-item {
+  padding: 9px 6px; text-align: center;
+  border-right: 1px solid var(--gray-200);
+}
+.rc-nut-item:last-child { border-right: none; }
+.rc-nut-val { font-size: 14px; font-weight: 700; color: var(--gray-900); line-height: 1; }
+.rc-nut-item.hi .rc-nut-val { color: var(--green); }
+.rc-nut-lbl { font-size: 9px; font-weight: 600; color: var(--gray-400); margin-top: 3px; text-transform: uppercase; letter-spacing: .3px; }
+
+/* Section */
+.rc-section { padding: 11px 15px 13px; border-top: 1px solid var(--gray-200); }
+.rc-section:first-child { border-top: none; }
+.rc-section-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .6px;
+  text-transform: uppercase; color: var(--gray-400); margin-bottom: 9px;
+  display: flex; align-items: center; gap: 5px;
+}
+
+/* Ingredients */
+.ing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.ing-item {
+  font-size: 13px; color: var(--gray-700); line-height: 1.5;
+  padding: 5px 0 5px 14px; border-bottom: 1px solid var(--gray-100);
+  position: relative;
+}
+.ing-item:last-child { border-bottom: none; }
+.ing-item::before {
+  content: ''; position: absolute; left: 2px; top: 50%; transform: translateY(-50%);
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green-m); border: 1.5px solid var(--green);
+}
+
+/* Steps */
+.step-list { display: flex; flex-direction: column; gap: 9px; }
+.step-row { display: flex; gap: 9px; }
+.step-num {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green-l); color: var(--green-d);
+  font-size: 10px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.step-txt { font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+
+/* Score */
+.rc-score {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 15px 10px; border-top: 1px solid var(--gray-100);
+}
+.rc-score-lbl { font-size: 10px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
+.rc-score-bar { flex: 1; height: 3px; background: var(--gray-100); border-radius: 2px; overflow: hidden; }
+.rc-score-fill { height: 100%; background: linear-gradient(90deg, var(--green-m), var(--green)); border-radius: 2px; }
+.rc-score-pct { font-size: 11px; color: var(--green); font-weight: 700; }
+
+/* ── TYPING ── */
+.typing-dots { display: flex; gap: 4px; padding: 3px 0; }
+.typing-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gray-300); animation: dot 1.2s infinite;
+}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,60%,100%{transform:none}30%{transform:translateY(-4px)}}
+
+/* ── INPUT ── */
+.input-area {
+  padding: 10px 12px 14px; background: var(--white);
+  border-top: 1px solid var(--gray-200); flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,.04);
+}
+.input-row {
+  display: flex; align-items: flex-end; gap: 8px;
+  background: var(--gray-100); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 7px 7px 7px 14px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.input-row:focus-within {
+  border-color: var(--green); background: var(--white);
+  box-shadow: 0 0 0 3px rgba(34,168,97,.1);
+}
+.input-row textarea {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-family: var(--font); font-size: 13.5px; color: var(--gray-900);
+  resize: none; line-height: 1.5; min-height: 20px; max-height: 90px; padding: 2px 0;
+}
+.input-row textarea::placeholder { color: var(--gray-400); }
+.send-btn {
+  width: 34px; height: 34px; border-radius: 50%; border: none;
+  background: var(--green); cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, transform .1s;
+  box-shadow: 0 2px 6px rgba(34,168,97,.35);
+}
+.send-btn:hover  { background: var(--green-d); }
+.send-btn:active { transform: scale(.93); }
+.send-btn:disabled { background: var(--gray-200); box-shadow: none; cursor: not-allowed; }
+.send-btn svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── MOBILE FRIENDLY ── */
+@media (max-width: 480px) {
+  .rc-nut { grid-template-columns: repeat(2, 1fr); }
+  .rc-nut-item:nth-child(2) { border-right: none; }
+  .rc-nut-item:nth-child(3) { border-top: 1px solid var(--gray-200); }
+  .rc-nut-item:nth-child(4) { border-top: 1px solid var(--gray-200); border-right: none; }
+  .bub { max-width: 94%; font-size: 13px; }
+  .recipe-bubble { max-width: 98%; }
+  .rc-title { font-size: 13.5px; }
+}
+
+/* max width for large screens */
+@media (min-width: 640px) {
+  .chat-wrap { max-width: 640px; margin: 0 auto; }
+  .topbar > * { max-width: 640px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2"/><polyline points="12 6 12 12 16 14"/></svg>
+  </div>
+  <span class="logo-name">Resep<em>Diet</em></span>
+  <span class="corpus-badge" id="corpus-info">memuat...</span>
+</header>
+
+<div class="chat-wrap">
+  <div class="messages" id="messages">
+    <div class="msg bot">
+      <div class="av">R</div>
+      <div class="bub">
+        Halo! Selamat datang di <b>ResepDiet</b> 🥗<br><br>
+        Lagi cari inspirasi masakan sehat? Saya siap bantu carikan resep rendah kalori yang cocok buat kamu hari ini.<br><br>
+        Mau mulai dari mana? Coba tanya:<br>
+        <em>"Resep ayam rendah kalori"</em><br>
+        <em>"Ada tahu di rumah, bisa masak apa?"</em><br>
+        <em>"Ikan yang tidak bikin gemuk"</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-row">
+      <textarea id="inp" rows="1" placeholder="Tanya tentang resep diet..."
+        onkeydown="onKey(event)" oninput="autoH(this)"></textarea>
+      <button class="send-btn" id="send-btn" onclick="send()" aria-label="Kirim">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let loading = false;
+
+/* ── INIT ── */
+async function init() {
+  try {
+    const d = await fetch('/health').then(r => r.json());
+    $('corpus-info').innerHTML = `<b>${d.corpus.toLocaleString('id')}</b> resep`;
+  } catch { $('corpus-info').textContent = 'offline'; }
+}
+
+/* ── INPUT ── */
+function autoH(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 90) + 'px';
+}
+function onKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function mdLite(s) {
+  return esc(s)
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+    .replace(/\*([^*]+)\*/g,'<em>$1</em>');
+}
+
+function scrollBot() {
+  const m = $('messages');
+  m.scrollTop = m.scrollHeight;
+}
+
+/* ── ADD TEXT MESSAGE ── */
+function addMsg(html, role) {
+  const wrap = $('messages');
+  const div  = document.createElement('div');
+  div.className = `msg ${role}`;
+  div.innerHTML = `<div class="av">${role==='bot'?'R':'K'}</div><div class="bub">${html}</div>`;
+  wrap.appendChild(div);
+  scrollBot();
+}
+
+/* ── ADD RECIPE CARDS inside chat ── */
+function addRecipes(recipes) {
+  if (!recipes || !recipes.length) return;
+  const wrap = $('messages');
+
+  const outer = document.createElement('div');
+  outer.className = 'msg bot';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'recipe-bubble';
+
+  recipes.forEach((r, i) => {
+    const n   = r.nutrition || {};
+    const kal  = n.kalori  != null ? n.kalori  : null;
+    const pro  = n.protein != null ? n.protein : null;
+    const fat  = n.lemak   != null ? n.lemak   : null;
+    const carb = n.karbo   != null ? n.karbo   : null;
+    const pct  = r.score_pct || 0;
+
+    const ingHtml = (r.ingredients || [])
+      .map(x => `<li class="ing-item">${esc(x)}</li>`).join('');
+
+    const stpHtml = (r.steps || [])
+      .map((s, j) => `
+        <div class="step-row">
+          <div class="step-num">${j+1}</div>
+          <div class="step-txt">${esc(s)}</div>
+        </div>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'recipe-card';
+    card.style.animationDelay = `${i * 0.08}s`;
+    card.innerHTML = `
+      <div class="rc-head">
+        <div class="rc-rank">${r.rank}</div>
+        <div class="rc-title">${esc(r.title)}</div>
+        <span class="rc-cat">${esc(r.category)}</span>
+      </div>
+      <div class="rc-nut">
+        <div class="rc-nut-item hi">
+          <div class="rc-nut-val">${kal != null ? kal : '—'}<span style="font-size:9px;font-weight:400;color:var(--gray-400)">${kal != null ? ' kkal' : ''}</span></div>
+          <div class="rc-nut-lbl">Per porsi</div>
+        </div>
+        <div class="rc-nut-item">
+          <div class="rc-nut-val">${pro != null ? pro + 'g' : '—'}</div>
+          <div class="rc-nut-lbl">Protein</div>
+        </div>
+        <div class="rc-nut-item">
+          <div class="rc-nut-val">${fat != null ? fat + 'g' : '—'}</div>
+          <div class="rc-nut-lbl">Lemak</div>
+        </div>
+        <div class="rc-nut-item">
+          <div class="rc-nut-val">${carb != null ? carb + 'g' : '—'}</div>
+          <div class="rc-nut-lbl">Karbo</div>
+        </div>
+      </div>
+      ${ingHtml ? `
+      <div class="rc-section">
+        <div class="rc-section-title">📝 Bahan-bahan (${(r.ingredients||[]).length} item)</div>
+        <ul class="ing-list">${ingHtml}</ul>
+      </div>` : ''}
+      ${stpHtml ? `
+      <div class="rc-section">
+        <div class="rc-section-title">👨‍🍳 Cara memasak (${(r.steps||[]).length} langkah)</div>
+        <div class="step-list">${stpHtml}</div>
+      </div>` : ''}
+      <div class="rc-score">
+        <span class="rc-score-lbl">Relevansi</span>
+        <div class="rc-score-bar">
+          <div class="rc-score-fill" style="width:${pct}%"></div>
+        </div>
+        <span class="rc-score-pct">${pct}%</span>
+      </div>`;
+
+    bubble.appendChild(card);
+  });
+
+  outer.appendChild(bubble);
+  wrap.appendChild(outer);
+  scrollBot();
+}
+
+/* ── TYPING INDICATOR ── */
+function showTyping() {
+  const wrap = $('messages');
+  const div = document.createElement('div');
+  div.id = 'typing'; div.className = 'msg bot';
+  div.innerHTML = `<div class="av">R</div><div class="bub"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div);
+  scrollBot();
+}
+function rmTyping() { const t = $('typing'); if (t) t.remove(); }
+
+/* ── SEND ── */
+async function send() {
+  if (loading) return;
+  const inp  = $('inp');
+  const text = inp.value.trim();
+  if (!text) return;
+
+  loading = true;
+  inp.value = ''; inp.style.height = 'auto';
+  $('send-btn').disabled = true;
+
+  addMsg(esc(text), 'user');
+  showTyping();
+
+  try {
+    const res  = await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, top_k: 3 }),
+    });
+    const data = await res.json();
+    rmTyping();
+
+    // Tampilkan pesan singkat dulu
+    addMsg(mdLite(data.message || 'Ada yang bisa saya bantu?'), 'bot');
+
+    // Lalu tampilkan kartu resep langsung di chat
+    if (data.recipes && data.recipes.length) {
+      addRecipes(data.recipes);
+    }
+
+  } catch (e) {
+    rmTyping();
+    addMsg('Maaf, terjadi kesalahan koneksi. Coba lagi ya! 😅', 'bot');
+  }
+
+  loading = false;
+  $('send-btn').disabled = false;
+  inp.focus();
+}
+
+init();
+</script>
+</body>
+</html>

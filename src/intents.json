@@ -1,0 +1,364 @@
+{
+    "intents": [
+
+        {
+            "tag": "greeting",
+            "patterns": [
+                "halo", "hai", "hi", "hello", "hey", "hei",
+                "selamat pagi", "selamat siang", "selamat sore", "selamat malam",
+                "permisi", "assalamualaikum", "hallo", "helo", "p"
+            ],
+            "responses": [
+                "Halo! Saya asisten resep diet rendah kalori 🥗 Ada yang bisa saya bantu?",
+                "Hai! Selamat datang! Mau cari resep sehat apa hari ini? 😊",
+                "Hello! Saya siap membantu kamu menemukan resep diet rendah kalori 💪"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "bye", "dadah", "sampai jumpa", "selamat tinggal",
+                "makasih ya sudah membantu", "terima kasih sudah membantu",
+                "oke cukup", "sudah cukup", "selesai"
+            ],
+            "responses": [
+                "Sampai jumpa! Semoga diet kamu berhasil 💪",
+                "Dadah! Jaga kesehatan ya 😊",
+                "Selamat tinggal! Semangat diet-nya! 🥗"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "thanks",
+            "patterns": [
+                "terima kasih", "makasih", "thx", "thanks", "thank you",
+                "tengkyu", "makasih banyak", "terima kasih banyak",
+                "tq", "ty", "nuhun", "matur nuwun", "suwun"
+            ],
+            "responses": [
+                "Sama-sama! Semoga resepnya bermanfaat 😊",
+                "Dengan senang hati! Ada lagi yang bisa saya bantu?",
+                "Tentu! Jangan lupa makan sehat ya 🥗"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "help",
+            "patterns": [
+                "help", "bantuan", "tolong bantu", "panduan",
+                "cara pakai", "cara menggunakan", "bisa apa saja",
+                "kamu bisa apa", "apa yang bisa kamu lakukan",
+                "fitur apa saja", "apa saja yang bisa ditanya"
+            ],
+            "responses": [
+                "Saya bisa membantu kamu mencari resep diet rendah kalori! 🥗\n\nCoba tanya seperti ini:\n  • 'Resep ayam rendah kalori'\n  • 'Saya punya tahu dan tempe, mau masak apa?'\n  • 'Jika ada ikan di kulkas, bisa dimasak apa yang sehat?'\n  • 'Makanan diet untuk sarapan'\n  • 'Udang di bawah 300 kalori'"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "about",
+            "patterns": [
+                "kamu siapa", "siapa kamu", "apa ini", "ini apa",
+                "tentang kamu", "about", "kamu itu apa",
+                "bot ini untuk apa", "kegunaan bot ini",
+                "chatbot ini buat apa", "ini chatbot apa"
+            ],
+            "responses": [
+                "Saya adalah chatbot pencari resep diet rendah kalori 🤖\n\nSaya menggunakan teknologi TF-IDF, BM25, dan Calorie-Aware Ranking untuk menemukan resep yang paling relevan dan rendah kalori sesuai kebutuhan kamu.",
+                "Saya chatbot resep diet berbasis sistem temu kembali informasi 🥗\n\nCukup ketik bahan atau jenis masakan yang kamu inginkan, saya akan carikan resep rendah kalorinya!"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "search_ayam",
+            "patterns": [
+                "resep ayam", "olahan ayam", "masakan ayam",
+                "ayam rendah kalori", "ayam diet", "ayam sehat",
+                "ayam tidak bikin gemuk", "ayam nggak bikin gemuk",
+                "ayam kukus", "ayam bakar", "ayam panggang",
+                "ayam rebus", "ayam tim", "ayam tumis",
+                "chicken diet", "resep dada ayam",
+                "ada ayam", "punya ayam", "stok ayam",
+                "ayam di kulkas", "ayam di rumah",
+                "bahan ayam", "dari ayam", "pakai ayam",
+                "menggunakan ayam", "masak ayam"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:ayam.csv"],
+            "action": "search",
+            "kategori": "ayam.csv"
+        },
+
+        {
+            "tag": "search_ikan",
+            "patterns": [
+                "resep ikan", "olahan ikan", "masakan ikan",
+                "ikan rendah kalori", "ikan diet", "ikan sehat",
+                "ikan tidak bikin gemuk", "ikan kukus", "ikan bakar",
+                "ikan panggang", "ikan rebus", "ikan tim",
+                "lele diet", "nila bakar", "salmon kukus",
+                "ikan ga bikin buncit", "ikan low fat",
+                "ada ikan", "punya ikan", "stok ikan",
+                "ikan di kulkas", "ikan di rumah",
+                "bahan ikan", "dari ikan", "pakai ikan",
+                "menggunakan ikan", "masak ikan"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:ikan.csv"],
+            "action": "search",
+            "kategori": "ikan.csv"
+        },
+
+        {
+            "tag": "search_sapi",
+            "patterns": [
+                "resep sapi", "olahan sapi", "masakan sapi",
+                "daging sapi rendah kalori", "daging sapi diet",
+                "sapi bakar", "sapi panggang", "sapi rebus",
+                "sapi tidak berlemak", "beef rendah lemak",
+                "daging rendah kalori", "semur sapi diet",
+                "ada sapi", "punya sapi", "stok sapi",
+                "daging sapi di kulkas", "daging sapi di rumah",
+                "bahan daging sapi", "dari daging sapi", "pakai sapi",
+                "masak sapi"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:sapi.csv"],
+            "action": "search",
+            "kategori": "sapi.csv"
+        },
+
+        {
+            "tag": "search_kambing",
+            "patterns": [
+                "resep kambing", "olahan kambing", "masakan kambing",
+                "kambing rendah kalori", "kambing diet", "kambing sehat",
+                "kambing tidak berminyak", "kambing bakar",
+                "domba diet", "lamb rendah kalori",
+                "ada kambing", "punya kambing", "stok kambing",
+                "daging kambing di kulkas", "bahan kambing",
+                "dari kambing", "pakai kambing", "masak kambing"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:kambing.csv"],
+            "action": "search",
+            "kategori": "kambing.csv"
+        },
+
+        {
+            "tag": "search_udang",
+            "patterns": [
+                "resep udang", "olahan udang", "masakan udang",
+                "udang rendah kalori", "udang diet", "udang sehat",
+                "udang rendah lemak", "udang kukus", "udang bakar",
+                "udang tumis diet", "shrimp diet", "udang tidak bikin gemuk",
+                "ada udang", "punya udang", "stok udang",
+                "udang di kulkas", "udang di rumah", "udang di freezer",
+                "bahan udang", "dari udang", "pakai udang", "masak udang"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:udang.csv"],
+            "action": "search",
+            "kategori": "udang.csv"
+        },
+
+        {
+            "tag": "search_tahu",
+            "patterns": [
+                "resep tahu", "olahan tahu", "masakan tahu",
+                "tahu rendah kalori", "tahu diet", "tahu sehat",
+                "tahu kukus", "tahu rebus", "tahu rendah lemak",
+                "tahu tidak bikin gemuk", "tofu diet", "tahu panggang",
+                "ada tahu", "punya tahu", "stok tahu",
+                "tahu di kulkas", "tahu di rumah",
+                "bahan tahu", "dari tahu", "pakai tahu",
+                "menggunakan tahu", "masak tahu",
+                "tahu bisa", "tahu diolah", "tahu dimasak"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:tahu.csv"],
+            "action": "search",
+            "kategori": "tahu.csv"
+        },
+
+        {
+            "tag": "search_telur",
+            "patterns": [
+                "resep telur", "olahan telur", "masakan telur",
+                "telur rendah kalori", "telur diet", "telur sehat",
+                "telur rebus", "telur kukus", "telur rendah lemak",
+                "telur tidak bikin gemuk", "egg diet", "telor diet",
+                "sarapan telur sehat", "ada telur", "punya telur",
+                "stok telur", "telur di kulkas", "telur di rumah",
+                "bahan telur", "dari telur", "pakai telur",
+                "menggunakan telur", "masak telur",
+                "telor bisa", "telur diolah", "telur dimasak",
+                "ada telor", "punya telor"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:telur.csv"],
+            "action": "search",
+            "kategori": "telur.csv"
+        },
+
+        {
+            "tag": "search_tempe",
+            "patterns": [
+                "resep tempe", "olahan tempe", "masakan tempe",
+                "tempe rendah kalori", "tempe diet", "tempe sehat",
+                "tempe kukus", "tempe rebus", "tempe rendah lemak",
+                "tempe tidak bikin gemuk", "tempeh diet", "tempe panggang",
+                "ada tempe", "punya tempe", "stok tempe",
+                "tempe di kulkas", "tempe di rumah",
+                "bahan tempe", "dari tempe", "pakai tempe",
+                "menggunakan tempe", "masak tempe",
+                "tempe bisa", "tempe diolah", "tempe dimasak"
+            ],
+            "responses": ["__SEARCH_KATEGORI__:tempe.csv"],
+            "action": "search",
+            "kategori": "tempe.csv"
+        },
+
+        {
+            "tag": "search_bahan",
+            "patterns": [
+                "saya punya", "aku punya", "ada bahan", "punya bahan",
+                "bahan yang ada", "bahan di kulkas", "ada di kulkas",
+                "pakai bahan", "menggunakan bahan", "dengan bahan",
+                "mau masak pakai", "bisa masak apa dengan",
+                "kalau punya", "kalau ada", "jika ada", "jika punya",
+                "bila ada", "bila punya", "seandainya ada",
+                "di rumah ada", "di kulkas ada", "di freezer ada",
+                "kebetulan ada", "kebetulan punya",
+                "bisa diolah jadi apa", "bisa dibuat apa",
+                "bisa dimasak apa", "enaknya dimasak apa",
+                "kira kira bisa masak", "kira-kira bisa masak",
+                "mau masak apa", "masak apa ya"
+            ],
+            "responses": ["__SEARCH_BAHAN__"],
+            "action": "search_bahan"
+        },
+
+        {
+            "tag": "search_diet_umum",
+            "patterns": [
+                "makanan diet", "menu diet", "lauk diet",
+                "makanan rendah kalori", "menu rendah kalori",
+                "makanan sehat", "menu sehat", "lauk sehat",
+                "makanan tidak bikin gemuk", "makanan low calorie",
+                "makanan untuk diet", "menu untuk diet",
+                "rekomendasi diet", "saran makanan diet",
+                "makanan buat diet", "menu buat diet",
+                "mau diet", "lagi diet", "sedang diet",
+                "pengen diet", "ingin diet"
+            ],
+            "responses": ["__SEARCH_DIET__"],
+            "action": "search_diet"
+        },
+
+        {
+            "tag": "search_sarapan",
+            "patterns": [
+                "sarapan sehat", "sarapan diet", "sarapan rendah kalori",
+                "menu sarapan", "sarapan pagi sehat", "sarapan tidak bikin gemuk",
+                "breakfast sehat", "makan pagi diet", "sarapan apa yang sehat",
+                "rekomendasi sarapan", "sarapan buat diet"
+            ],
+            "responses": ["__SEARCH_SARAPAN__"],
+            "action": "search",
+            "query_override": "sarapan sehat rendah kalori"
+        },
+
+        {
+            "tag": "search_makan_siang",
+            "patterns": [
+                "makan siang sehat", "makan siang diet", "makan siang rendah kalori",
+                "menu makan siang", "lauk makan siang diet",
+                "lunch sehat", "lunch diet", "makan siang apa yang sehat"
+            ],
+            "responses": ["__SEARCH__"],
+            "action": "search",
+            "query_override": "lauk makan siang rendah kalori"
+        },
+
+        {
+            "tag": "search_makan_malam",
+            "patterns": [
+                "makan malam sehat", "makan malam diet", "makan malam rendah kalori",
+                "menu makan malam", "lauk makan malam diet",
+                "dinner sehat", "dinner diet", "makan malam apa yang sehat"
+            ],
+            "responses": ["__SEARCH__"],
+            "action": "search",
+            "query_override": "lauk makan malam rendah kalori"
+        },
+
+        {
+            "tag": "info_kalori",
+            "patterns": [
+                "berapa kalori", "kalori berapa", "kalori dalam",
+                "kandungan kalori", "info kalori", "cek kalori",
+                "kalori ayam", "kalori ikan", "kalori tempe", "kalori tahu",
+                "kalori telur", "kalori sapi", "kalori udang"
+            ],
+            "responses": [
+                "Saya bisa membantu mencari resep rendah kalori, tapi untuk info kalori spesifik per bahan silakan cek di aplikasi gizi seperti FatSecret atau TKPI (Tabel Komposisi Pangan Indonesia) ya 😊\n\nMau saya carikan resep rendah kalori dari bahan tersebut?"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "info_gizi",
+            "patterns": [
+                "info gizi", "kandungan gizi", "nilai gizi",
+                "protein berapa", "lemak berapa", "karbohidrat berapa",
+                "gizi makanan", "nutrisi makanan", "kandungan nutrisi",
+                "makanan tinggi protein", "makanan rendah lemak",
+                "makanan tinggi serat", "makanan rendah karbohidrat"
+            ],
+            "responses": [
+                "Setiap resep yang saya rekomendasikan sudah dilengkapi info gizi per porsi 🥗\n\nMeliputi: 🔥 Kalori | 🥩 Protein | 🫙 Lemak | 🌾 Karbohidrat\n\nMau saya carikan resep dengan profil gizi tertentu? Misalnya 'resep ayam tinggi protein rendah kalori'?"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "tips_diet",
+            "patterns": [
+                "tips diet", "cara diet", "tips sehat",
+                "cara turun berat badan", "cara kurus",
+                "saran diet", "tips makan sehat",
+                "pola makan sehat", "diet yang benar",
+                "bagaimana cara diet"
+            ],
+            "responses": [
+                "Berikut tips diet sehat secara umum 💡\n\n1. Pilih protein rendah lemak (ayam kukus, ikan bakar, tahu, tempe)\n2. Kurangi gorengan, ganti dengan kukus/rebus/panggang\n3. Perbanyak sayuran hijau\n4. Makan dengan porsi kecil tapi sering (3-5x sehari)\n5. Hindari makanan olahan dan gula berlebih\n\nMau saya carikan resep yang sesuai tips di atas? 🥗"
+            ],
+            "action": "respond"
+        },
+
+        {
+            "tag": "filter_kalori",
+            "patterns": [
+                "di bawah 300 kalori", "kurang dari 300 kalori",
+                "di bawah 400 kalori", "kurang dari 400 kalori",
+                "di bawah 500 kalori", "kurang dari 500 kalori",
+                "maksimal 300 kalori", "maksimal 400 kalori",
+                "kalori rendah banget", "sangat rendah kalori",
+                "kalori di bawah", "max kalori"
+            ],
+            "responses": ["__SEARCH_FILTER_KALORI__"],
+            "action": "search_filter_kalori"
+        },
+
+        {
+            "tag": "tidak_dimengerti",
+            "patterns": [],
+            "responses": [
+                "Hmm, saya belum mengerti maksudnya 😅\n\nSaya spesialis resep diet rendah kalori. Coba tanya seperti:\n  • 'Resep ayam rendah kalori'\n  • 'Jika ada tahu di rumah, bisa dimasak apa yang sehat?'\n  • 'Makanan diet untuk sarapan'",
+                "Maaf, saya kurang paham 😅\n\nSaya bisa bantu cari resep makanan rendah kalori. Coba sebutkan bahan atau jenis masakan yang kamu inginkan ya!"
+            ],
+            "action": "respond"
+        }
+
+    ]
+}

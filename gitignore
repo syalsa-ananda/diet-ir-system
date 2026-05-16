@@ -1,0 +1,40 @@
+# ============================================================
+# .gitignore — diet-ir-system
+# ============================================================
+
+# === KEAMANAN — JANGAN PERNAH DI-PUSH ===
+.env
+
+# === VIRTUAL ENVIRONMENT ===
+.venv/
+venv/
+env/
+
+# === MODEL & DATA GENERATED ===
+# File-file ini di-generate ulang dengan menjalankan notebook
+src/ir_model.pkl
+data/resep_clean.csv
+data/dataset_final_resep_nutrisi.csv
+data/resep/
+output/
+
+# === JUPYTER ===
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# === PYTHON CACHE ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# === OS FILES ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === EDITOR ===
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,11 @@
+# Object file
+*.o
+
+# Ada Library Information
+*.ali
+
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
